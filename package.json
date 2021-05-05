@@ -1,13 +1,13 @@
 {
   "name": "ibuypower-bot",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A simple bot to automatically check on the status of my iBUYPOWER PC order each day.",
+  "main": "bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Caleb O'Malley",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
