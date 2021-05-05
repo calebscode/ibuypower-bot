@@ -2,8 +2,8 @@ const puppeteer = require('puppeteer');
 const nodemailer = require("nodemailer");
 require('dotenv').config();
 
-const oneDay = 24 * 60 * 60 * 1000; // one day in milliseconds
-setInterval(getOrderInfo, oneDay); // for deployment ot Heroku
+const twelveHours = 12*60*60*1000; // one day in milliseconds
+setInterval(runBot, twelveHours); // for deployment ot Heroku
 // runBot(); // for testing use
 
 async function getOrderInfo() {
