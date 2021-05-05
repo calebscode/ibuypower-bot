@@ -6,7 +6,12 @@
   "scripts": {
 	"start": "node ./bot.js"
   },
-  "keywords": [],
+  "keywords": [
+	  "bot",
+	  "automation",
+	  "puppeteer",
+	  "nodemailer"
+  ],
   "author": "Caleb O'Malley",
   "license": "MIT",
   "dependencies": {
