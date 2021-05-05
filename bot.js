@@ -2,9 +2,8 @@ const puppeteer = require('puppeteer');
 const nodemailer = require("nodemailer");
 require('dotenv').config();
 
-const twelveHours = 12*60*60*1000; // one day in milliseconds
-setInterval(runBot, twelveHours); // for deployment ot Heroku
-// runBot(); // for testing use
+const twelveHours = 12*60*60*1000;
+setInterval(runBot, twelveHours);
 
 async function getOrderInfo() {
 	const browser = await puppeteer.launch();
@@ -80,8 +79,10 @@ async function sendImage() {
 async function runBot() {
 	console.log("Getting order info from iBUYPOWER.com ...");
 	await getOrderInfo(); // generate today's png
+
 	console.log("Screenshot taken! Sending email now ...");
 	await sendImage(); // send the image to myself
+	
 	let today = new Date();
 	console.log("Message successfully sent at: " + today);
 }
