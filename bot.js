@@ -6,9 +6,13 @@ require('dotenv').config();
 // Every minute
 setInterval(runBot, 1000*60);
 
-
 async function getOrderInfo() {
-	const browser = await puppeteer.launch();
+	const browser = await puppeteer.launch({
+		'args' : [
+		  '--no-sandbox',
+		  '--disable-setuid-sandbox'
+		]
+	  });
 	const page = await browser.newPage();
 
 	// Set the size of the page to not clip content
