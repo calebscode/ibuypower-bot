@@ -2,8 +2,10 @@ const puppeteer = require('puppeteer');
 const nodemailer = require("nodemailer");
 require('dotenv').config();
 
+
 // Every minute
 setInterval(runBot, 1000*60*60);
+
 
 async function getOrderInfo() {
 	const browser = await puppeteer.launch();
