@@ -4,13 +4,13 @@
   "description": "A simple bot to automatically check on the status of my iBUYPOWER PC order each day.",
   "main": "bot.js",
   "scripts": {
-	"start": "node ./bot.js"
+    "start": "node ./bot.js"
   },
   "keywords": [
-	  "bot",
-	  "automation",
-	  "puppeteer",
-	  "nodemailer"
+    "bot",
+    "automation",
+    "puppeteer",
+    "nodemailer"
   ],
   "author": "Caleb O'Malley",
   "license": "MIT",

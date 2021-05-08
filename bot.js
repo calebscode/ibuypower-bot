@@ -4,7 +4,7 @@ require('dotenv').config();
 
 
 // Every minute
-setInterval(runBot, 1000*60*60);
+setInterval(runBot, 1000*60);
 
 
 async function getOrderInfo() {
