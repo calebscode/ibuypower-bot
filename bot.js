@@ -2,17 +2,15 @@ const puppeteer = require('puppeteer');
 const nodemailer = require("nodemailer");
 require('dotenv').config();
 
-
-// Every 24 hours
-setInterval(runBot, 1000*60*60*24);
+botSetInterval();
 
 async function getOrderInfo() {
 	const browser = await puppeteer.launch({
-		'args' : [
-		  '--no-sandbox',
-		  '--disable-setuid-sandbox'
+		'args': [
+			'--no-sandbox',
+			'--disable-setuid-sandbox'
 		]
-	  });
+	});
 	const page = await browser.newPage();
 
 	// Set the size of the page to not clip content
@@ -76,7 +74,7 @@ async function sendImage() {
 	}
 
 	let info = await transporter.sendMail(mailOptions, (err, info) => {
-		if(err) {
+		if (err) {
 			return console.log("Nodemailer error: " + err);
 		}
 	});
@@ -88,7 +86,12 @@ async function runBot() {
 
 	console.log("Screenshot taken! Sending email now ...");
 	await sendImage(); // send the image to myself
-	
+
 	let today = new Date();
 	console.log("Message successfully sent at: " + today);
+}
+
+async function botSetInterval() {
+	await runBot(); // Run as soon as the bot starts up	
+	return setInterval(runBot, 1000 * 60 * 60 * 24); // run again, every 24 hours
 }
