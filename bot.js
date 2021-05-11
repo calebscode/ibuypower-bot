@@ -70,7 +70,7 @@ async function sendImage() {
 		to: `${process.env.EMAIL_DEST}`,
 		subject: "Today's PC Order Check-in!",
 		text: "Here are your PC order details for today:",
-		html: '<h1>Here are your PC order details for today:</h1><br><img src="cid:orderdetails"/>',
+		html: '<h4>Here are your PC order details for today:</h4><br><img src="cid:orderdetails"/>',
 		attachments: [{
 			filename: 'order-details.png',
 			path: './order-status.png',
@@ -78,7 +78,7 @@ async function sendImage() {
 		}]
 	}
 
-	let info = transporter.sendMail(mailOptions, (err, info) => {
+	let info = transporter.sendMail(mailOptions, (err) => {
 		if (err) {
 			return console.log("Nodemailer error: " + err);
 		}
@@ -86,14 +86,21 @@ async function sendImage() {
 }
 
 async function runBot() {
-	console.log("Getting order info from iBUYPOWER.com ...");
-	await getOrderInfo(); // generate today's png
+	try {
+		console.log("Getting order info from iBUYPOWER.com ...");
+		await getOrderInfo(); // generate today's png
+		console.log("Screenshot taken! Sending email now ...");
+	} catch(err) {
+		console.log(`Error getting screenshot: ${err}`)
+	}
 
-	console.log("Screenshot taken! Sending email now ...");
-	await sendImage(); // send the image to myself
-
-	let today = new Date();
-	console.log("Message successfully sent at: " + today);
+	try {
+		await sendImage(); // send the image to myself		
+		const today = new Date();
+		console.log(`Message successfully sent at: ${today}`);
+	} catch(err) {
+		console.log(`Error sending email from Nodemailer: ${err}`)
+	}
 }
 
 async function botSetInterval() {
