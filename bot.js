@@ -35,16 +35,21 @@ async function getOrderInfo() {
 	// Click submit button
 	await page.click("button[type='submit']");
 
-	// Wait for info to load into the page
-	await page.waitForSelector(".info");
+	// Wait for info HTML to load into the page
+	await page.waitForSelector("#orderstatus > div > div.show-order-status.row.d-flex.justify-content-center.border.border-dark.mt-5 > div > div.info");
+
+	// Get order status element + bounding box
+	const infoDiv = await page.$("#orderstatus > div > div.show-order-status.row.d-flex.justify-content-center.border.border-dark.mt-5");
+	const box = await infoDiv.boundingBox();
+	const { x, y, width, height } = box;
 
 	await page.screenshot({
 		path: 'order-status.png',
 		clip: {
-			x: 0,
-			y: 300,
-			width: 1300,
-			height: 750
+			x: x,
+			y: y,
+			width: width,
+			height: height,
 		}
 	});
 
@@ -65,7 +70,7 @@ async function sendImage() {
 		to: `${process.env.EMAIL_DEST}`,
 		subject: "Today's PC Order Check-in!",
 		text: "Here are your PC order details for today:",
-		html: '<h1>Here are your PC order details for today:</h1><br><br><img src="cid:orderdetails"/>',
+		html: '<h1>Here are your PC order details for today:</h1><br><img src="cid:orderdetails"/>',
 		attachments: [{
 			filename: 'order-details.png',
 			path: './order-status.png',
@@ -73,7 +78,7 @@ async function sendImage() {
 		}]
 	}
 
-	let info = await transporter.sendMail(mailOptions, (err, info) => {
+	let info = transporter.sendMail(mailOptions, (err, info) => {
 		if (err) {
 			return console.log("Nodemailer error: " + err);
 		}
